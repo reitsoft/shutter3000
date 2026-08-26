@@ -19,6 +19,7 @@
 	let kellerLuftfeuchtigkeit = $state(58);
 
 	const LUEFTER_LAUFZEIT_SEKUNDEN = 120; // 2 Minuten
+    const PREIS_PRO_KWH = 0.27;
 
 	let luefterAn = $state(false);
 	let restlaufzeitSekunden = $state(0);
@@ -80,7 +81,7 @@
 
   <div class="flex items-center gap-2 rounded-full bg-navy-950 px-3 py-1.5">
     <span class="text-md font-bold text-cream-100">
-      {(aktuellerVerbrauch * 0.27).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+      {(aktuellerVerbrauch * PREIS_PRO_KWH).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
     </span>
   </div>
 </div>
