@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-navy-950: #0a1c30;
+  --color-navy-900: #0f2740;
+  --color-navy-800: #17324f;
+  --color-teal-500: #1b8fa1;
+  --color-teal-700: #146575;
+  --color-orange-500: #e8632c;
+  --color-cream-100: #d8ceb7;
+}
+
+@keyframes stripes-move {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+
+@keyframes fan-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fan-spin {
+    animation: none !important;
+  }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-navy-950);
+}
