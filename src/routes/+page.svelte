@@ -130,14 +130,14 @@
 				<div>
 					<div class="flex items-center gap-2">
 						<Thermometer class="h-5 w-5 stroke-3 text-teal-500" />
-						<span class="text-3xl font-bold text-cream-100">{badTemperatur.toFixed(1)}°</span>
+						<span class="text-2xl font-bold text-cream-100">{badTemperatur.toFixed(1)}°</span>
 					</div>
 					<div class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Temperatur</div>
 				</div>
 				<div class="ml-7">
 					<div class="flex items-center gap-2">
 						<Droplet class="h-5 w-5 stroke-3 text-teal-500" />
-						<span class="text-3xl font-bold text-cream-100">{badLuftfeuchtigkeit}%</span>
+						<span class="text-2xl font-bold text-cream-100">{badLuftfeuchtigkeit}%</span>
 					</div>
 					<div class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">
 						Feuchtigkeit
@@ -189,14 +189,14 @@
 				<div>
 					<div class="flex items-center gap-2">
 						<Thermometer class="h-5 w-5 stroke-3 text-teal-500" />
-						<span class="text-3xl font-bold text-cream-100">{kellerTemperatur.toFixed(1)}°</span>
+						<span class="text-2xl font-bold text-cream-100">{kellerTemperatur.toFixed(1)}°</span>
 					</div>
 					<div class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Temperatur</div>
 				</div>
 				<div class="ml-7">
 					<div class="flex items-center gap-2">
 						<Droplet class="h-5 w-5 stroke-3 text-teal-500" />
-						<span class="text-3xl font-bold text-cream-100">{kellerLuftfeuchtigkeit}%</span>
+						<span class="text-2xl font-bold text-cream-100">{kellerLuftfeuchtigkeit}%</span>
 					</div>
 					<div class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">
 						Feuchtigkeit
