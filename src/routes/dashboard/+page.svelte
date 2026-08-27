@@ -1,15 +1,13 @@
 <script lang="ts">
-	import Zap from '@lucide/svelte/icons/zap';
 	import Thermometer from '@lucide/svelte/icons/thermometer';
 	import Droplet from '@lucide/svelte/icons/droplet';
+	import Droplets from '@lucide/svelte/icons/droplets';
 	import Flame from '@lucide/svelte/icons/flame';
 	import Waves from '@lucide/svelte/icons/waves';
 	import Fan from '@lucide/svelte/icons/fan';
 	import DoorOpen from '@lucide/svelte/icons/door-open';
 	import ChevronsRight from '@lucide/svelte/icons/chevrons-right';
 	import Check from '@lucide/svelte/icons/check';
-	import House from '@lucide/svelte/icons/house';
-	import Rows3 from '@lucide/svelte/icons/rows-3';
 	import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
 	import { CircleCheck } from '@lucide/svelte';
 
@@ -103,6 +101,7 @@
 		luefterAn = an;
 		restlaufzeitSekunden = an ? LUEFTER_LAUFZEIT_SEKUNDEN : 0;
 	}
+
 
 	function onKlick() {
 		if (wurdeGezogen) return;
@@ -242,8 +241,8 @@
 				</div>
 
 				<!-- Heizung / Warmwasser -->
-				<div class="grid grid-cols-2 gap-4">
-					<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
+				<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
+					<div class="grid grid-cols-2 divide-x divide-cream-100/10">
 						<div class="flex items-center gap-3">
 							<div
 								class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-500/10"
@@ -255,30 +254,34 @@
 								<div class="text-xs text-cream-100/50">Temperatur</div>
 							</div>
 						</div>
-						<span
-							class="inline-flex w-fit items-center gap-1.5 rounded-full border border-orange-500/30 px-3 py-1.5 text-[11px] font-bold tracking-wide text-orange-500 uppercase"
-						>
-							<Flame class="h-3.5 w-3.5 stroke-3" />
-							Heizung {heizung.an ? 'an' : 'aus'}
-						</span>
-					</div>
-
-					<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
-						<div class="flex items-center gap-3">
+						<div class="flex items-center gap-3 pl-4">
 							<div
 								class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-500/10"
 							>
-								<Droplet class="h-5 w-5 stroke-3 text-blue-400" />
+								<Droplets class="h-5 w-5 stroke-3 text-orange-500/80" />
 							</div>
 							<div>
 								<div class="text-2xl font-bold text-cream-100">{warmwasser.temp.toFixed(1)}°</div>
 								<div class="text-xs text-cream-100/50">Warmwasser</div>
 							</div>
 						</div>
+					</div>
+
+					<div class="grid grid-cols-2 gap-2">
 						<span
-							class="inline-flex w-fit items-center gap-1.5 rounded-full border border-cream-100/15 px-3 py-1.5 text-[11px] font-bold tracking-wide text-cream-100/50 uppercase"
+							class="inline-flex w-fit items-center gap-1.5 rounded-full border px-2 py-1.5 text-[11px] font-bold tracking-wide uppercase {heizung.an
+								? 'border-orange-500/30 text-orange-500'
+								: 'border-cream-100/15 text-cream-100/50'}"
 						>
-							<Waves class="h-3.5 w-3.5 stroke-3" />
+							<Flame class="h-4.5 w-4.5 stroke-3 {heizung.an ? 'animate-pulse' : ''}" />
+							Heizung {heizung.an ? 'an' : 'aus'}
+						</span>
+						<span
+							class="inline-flex w-fit items-center gap-1.5 rounded-full border mx-2 px-2 py-1.5 text-[11px] font-bold tracking-wide uppercase {warmwasser.aufbereitung
+								? 'border-orange-500/30 text-orange-500'
+								: 'border-cream-100/15 text-cream-100/50'}"
+						>
+							<Waves class="h-4.5 w-4.5 stroke-3 {warmwasser.aufbereitung ? 'animate-pulse' : ''}" />
 							Aufwärmen {warmwasser.aufbereitung ? 'an' : 'aus'}
 						</span>
 					</div>
@@ -312,46 +315,31 @@
 						</div>
 					</div>
 
-					<!-- Lüfter-Schieber -->
-					<div
-						bind:clientWidth={trackBreite}
-						class="relative h-15 w-full overflow-hidden rounded-full border border-cream-100/10 bg-navy-950 p-1.5"
+					<!-- Lüfter-Toggle -->
+					<button
+						type="button"
+						role="switch"
+						aria-checked={luefterAn}
+						aria-label={luefterAn
+							? `Badlüfter ausschalten, noch ${restlaufzeitMinuten} Minuten aktiv`
+							: 'Badlüfter einschalten'}
+						onclick={() => setLuefter(!luefterAn)}
+						class="flex h-10 w-64 self-center items-center justify-center gap-2 rounded-full border border-cream-100/10 bg-navy-950 transition-colors {luefterAn
+							? 'bg-teal-500'
+							: 'bg-navy-950'}"
 					>
-						<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-							<span
-								class="text-xs font-bold tracking-wide uppercase {luefterAn
-									? 'text-cream-100'
-									: 'text-cream-100/40'}"
-							>
-								{luefterAn ? `Restlaufzeit ${restlaufzeitMinuten} Min` : 'Lüfter ist Aus'}
-							</span>
-						</div>
-
-						<button
-							type="button"
-							role="switch"
-							aria-checked={luefterAn}
-							aria-label={luefterAn
-								? `Badlüfter ausschalten, noch ${restlaufzeitMinuten} Minuten aktiv`
-								: 'Badlüfter einschalten'}
-							onpointerdown={onPointerDown}
-							onpointermove={onPointerMove}
-							onpointerup={onPointerUp}
-							onpointercancel={onPointerUp}
-							onclick={onKlick}
-							class="absolute inset-y-1.5 left-1.5 z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full {luefterAn
-								? 'bg-teal-500'
-								: 'bg-cream-100/10'}"
-							style="touch-action: none; transform: translateX({dragX}px); transition: {dragging
-								? 'none'
-								: 'transform 200ms ease-out'};"
+						<Fan
+							class="h-6 w-6 stroke-2 {luefterAn ? 'text-navy-950' : 'text-cream-100/40'}"
+							style={luefterAn ? 'animation: fan-spin 1.4s linear infinite;' : ''}
+						/>
+						<span
+							class="text-[11px] font-bold tracking-wide uppercase {luefterAn
+								? 'text-navy-950'
+								: 'text-cream-100/40'}"
 						>
-							<Fan
-								class="h-6 w-6 stroke-3 {luefterAn ? 'text-navy-950' : 'text-cream-100/40'}"
-								style={luefterAn ? 'animation: fan-spin 1.4s linear infinite;' : ''}
-							/>
-						</button>
-					</div>
+							{luefterAn ? `Restlaufzeit ${restlaufzeitMinuten} Min` : 'Lüfter ist Aus'}
+						</span>
+					</button>
 				</div>
 
 				<!-- Keller -->
@@ -367,10 +355,10 @@
 				{taupunktStatus.risiko ? 'bg-orange-500/10 text-orange-400' : 'bg-teal-500/10 text-teal-500'}"
 							>
 								{#if taupunktStatus.risiko}
-									<TriangleAlert class="h-3.5 w-3.5 stroke-3" />
+									<TriangleAlert class="h-4.5 w-4.5 stroke-2 animate-pulse" />
 									Kondensationsrisiko
 								{:else}
-									<CircleCheck class="h-3.5 w-3.5 stroke-3" />
+									<CircleCheck class="h-3.5 w-3.5 stroke-2" />
 									Taupunkt OK
 								{/if}
 							</div>
