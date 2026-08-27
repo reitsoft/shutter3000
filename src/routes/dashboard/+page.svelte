@@ -148,9 +148,14 @@
 </script>
 
 <div class="flex h-dvh flex-col bg-navy-950 text-cream-100 select-none">
-    <header class="w-full max-w-md shrink-0 self-center px-6 pt-6 pb-4">
-        <h1 class="text-2xl font-bold tracking-tight text-cream-100">Dahoam is Dahoam</h1>
-    </header>
+    <!-- Header -->
+<header class="w-full max-w-md shrink-0 self-center px-6 pt-7 pb-2 flex items-center justify-between">
+    <div>
+        <h1 class="font-handwriting text-4xl font-bold tracking-wide text-cream-100">
+            Dahoam is Dahoam
+        </h1>
+    </div>
+</header>>
 
     <main class="w-full max-w-md flex-1 self-center overflow-y-auto px-4 pb-4">
         <div class="flex flex-col gap-4">
@@ -158,8 +163,8 @@
 <div class="grid grid-cols-2 divide-x divide-navy-800 rounded-2xl bg-navy-900 p-4">
     <!-- Verbrauch heute -->
     <div class="flex items-center gap-3 pr-4">
-        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-500/10">
-            <Zap class="h-6 w-6 text-orange-500" />
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-orange-500/10">
+            <Zap class="h-5 w-5 text-orange-500" />
         </div>
         <div class="flex min-w-0 flex-1 flex-col justify-center">
             <div class="flex items-center gap-1.5">
