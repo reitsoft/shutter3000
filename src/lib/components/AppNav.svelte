@@ -13,7 +13,7 @@
 </script>
 
 <nav
-  class="fixed bottom-0 left-0 right-0 h-16 flex justify-around items-center bg-navy-900 border-t-4 border-navy-800 z-50"
+  class="fixed bottom-0 left-0 right-0 min-h-16 flex justify-around items-center bg-navy-900 border-t-4 border-navy-800 z-50"
   style="padding-bottom: env(safe-area-inset-bottom);"
 >
   {#each items as item (item.href)}

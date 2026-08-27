@@ -2,12 +2,20 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+ :root {
+     --nav-height: calc(4rem + env(safe-area-inset-bottom));
+   }
+
 html, body {
   height: 100%;
   margin: 0;
   overflow: hidden;
 	overscroll-behavior: none; /* verhindert Pull-to-Refresh/Bounce-Scroll auf iOS */
   background-color: var(--color-navy-950);
+}
+
+body {
+	overflow-x: hidden;
 }
 
 @font-face {
