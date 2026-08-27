@@ -12,7 +12,12 @@
     import Rows3 from '@lucide/svelte/icons/rows-3';
 
     // Dummy-Daten
-    const strom = { kwh: 4, kostenHeute: '1,08' };
+    const strom = { 
+    kwhHeute: 4, 
+    kostenHeute: '1,08',
+    kwhMonat: 124,
+    kostenMonat: '33,48'
+};
     const heizung = { temp: 21.4, an: true };
     const warmwasser = { temp: 48.2, aufbereitung: false };
     const bad = { temp: 23.8, feuchtigkeit: 62 };
@@ -150,20 +155,46 @@
     <main class="w-full max-w-md flex-1 self-center overflow-y-auto px-4 pb-4">
         <div class="flex flex-col gap-4">
             <!-- Stromverbrauch -->
-            <div class="flex items-center justify-between gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
-                <div class="flex items-center gap-3">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-orange-500/10">
-                        <Zap class="h-5 w-5 stroke-3 text-orange-500" />
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-cream-100">{strom.kwh} kWh</div>
-                        <div class="text-xs text-cream-100/50">Stromverbrauch heute</div>
-                    </div>
-                </div>
-                <span class="w-fit shrink-0 rounded-full border border-orange-500/30 px-3 py-1 text-xs font-bold tracking-wide text-orange-500 uppercase">
-                    {strom.kostenHeute} €
-                </span>
+<div class="flex flex-col gap-3 rounded-2xl bg-navy-900 p-4">
+    <!-- Heute -->
+    <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10">
+                <Zap class="h-5 w-5 text-orange-500" />
             </div>
+            <div>
+                <div class="text-xl font-bold text-cream-100 leading-none">
+                    {strom.kwhHeute} <span class="text-sm font-normal text-cream-200">kWh</span>
+                </div>
+                <div class="mt-1 text-xs text-cream-200">Verbrauch heute</div>
+            </div>
+        </div>
+        <span class="rounded-lg bg-orange-500/10 px-2.5 py-1 text-xs font-semibold text-orange-500">
+            {strom.kostenHeute} €
+        </span>
+    </div>
+
+    <!-- Trennlinie -->
+    <div class="h-px w-full bg-navy-800"></div>
+
+    <!-- Diesen Monat -->
+    <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5 pl-0.5">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-navy-800">
+                <Zap class="h-4 w-4 text-cream-200" />
+            </div>
+            <div>
+                <div class="text-base font-bold text-cream-100 leading-none">
+                    {strom.kwhMonat} <span class="text-xs font-normal text-cream-200">kWh</span>
+                </div>
+                <div class="mt-0.5 text-[11px] text-cream-200">Diesen Monat</div>
+            </div>
+        </div>
+        <span class="rounded-lg bg-navy-800 px-2.5 py-1 text-xs font-semibold text-cream-100">
+            {strom.kostenMonat} €
+        </span>
+    </div>
+</div>
 
             <!-- Heizung / Warmwasser -->
             <div class="grid grid-cols-2 gap-4">
