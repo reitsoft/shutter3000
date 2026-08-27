@@ -9,7 +9,7 @@
 	import ChevronsRight from '@lucide/svelte/icons/chevrons-right';
 	import Check from '@lucide/svelte/icons/check';
 	import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
-	import { CircleCheck } from '@lucide/svelte';
+	import { CircleCheck, Power, Sparkles } from '@lucide/svelte';
 
 	import { kondensationsRisiko } from '$lib/utilities/taupunkt';
 
@@ -24,23 +24,12 @@
 	const warmwasser = { temp: 48.2, aufbereitung: false };
 	const bad = { temp: 23.8, feuchtigkeit: 62 };
 
-	// Lüfter-Schieber (Bad)
-	const LUEFTER_LAUFZEIT_SEKUNDEN = 120;
-	const KNOB_GROESSE = 48; // Auf 48px angepasst (entspricht h-12)
-	const TRACK_PADDING = 6;
-
 	let luefterAn = $state(false);
-	let restlaufzeitSekunden = $state(0);
+	let restlaufzeitSekunden = $state(600);
 	let restlaufzeitMinuten = $derived(Math.ceil(restlaufzeitSekunden / 60));
 
-	let trackBreite = $state(0);
-	let maxDrag = $derived(Math.max(trackBreite - KNOB_GROESSE - TRACK_PADDING * 2, 0));
-
-	let dragging = $state(false);
-	let wurdeGezogen = false;
-	let dragX = $state(0);
-	let pointerStartX = 0;
-	let dragStartX = 0;
+	type Modus = 'auto' | 'timer' | 'aus';
+	let modus = $state<Modus>('aus');
 
 	// Dummy-Daten — durch echte Props/Store-Werte ersetzen
 	let kellerDummy = {
@@ -68,45 +57,6 @@
 	let outerHeight = $state(0);
 	let contentHeight = $state(0);
 	let scale = $derived(contentHeight > 0 ? Math.min(1, outerHeight / contentHeight) : 1);
-
-	$effect(() => {
-		if (dragging) return;
-		dragX = luefterAn ? maxDrag : 0;
-	});
-
-	function onPointerDown(e: PointerEvent) {
-		dragging = true;
-		wurdeGezogen = false;
-		pointerStartX = e.clientX;
-		dragStartX = dragX;
-		(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-	}
-
-	function onPointerMove(e: PointerEvent) {
-		if (!dragging) return;
-		const delta = e.clientX - pointerStartX;
-		if (Math.abs(delta) > 4) wurdeGezogen = true;
-		dragX = Math.min(Math.max(dragStartX + delta, 0), maxDrag);
-	}
-
-	function onPointerUp() {
-		if (!dragging) return;
-		dragging = false;
-		if (!wurdeGezogen) return;
-		const fortschritt = maxDrag > 0 ? dragX / maxDrag : 0;
-		setLuefter(fortschritt > 0.5);
-	}
-
-	function setLuefter(an: boolean) {
-		luefterAn = an;
-		restlaufzeitSekunden = an ? LUEFTER_LAUFZEIT_SEKUNDEN : 0;
-	}
-
-
-	function onKlick() {
-		if (wurdeGezogen) return;
-		setLuefter(!luefterAn);
-	}
 
 	$effect(() => {
 		if (!luefterAn) return;
@@ -203,12 +153,10 @@
 				<!-- Stromverbrauch -->
 				<div class="grid grid-cols-2 divide-x divide-navy-800 rounded-2xl bg-navy-900 p-4">
 					<!-- Verbrauch heute -->
-					<div class="flex items-center gap-3 pl-2 pr-4">
-						
+					<div class="flex items-center gap-3 pr-4 pl-2">
 						<div class="flex min-w-0 flex-1 flex-col justify-center">
 							<div class="flex items-center gap-1.5">
-								<span class="text-2xl leading-tight font-bold text-cream-100"
-									>{strom.kwhHeute}</span
+								<span class="text-2xl leading-tight font-bold text-cream-100">{strom.kwhHeute}</span
 								>
 								<span class="text-cream-200 text-sm font-medium">kWh</span>
 								<span
@@ -217,7 +165,7 @@
 									{strom.kostenHeute} €
 								</span>
 							</div>
-							<span class="text-cream-100/50 mt-0.5 truncate text-sm">Verbrauch heute</span>
+							<span class="mt-0.5 truncate text-sm text-cream-100/50">Verbrauch heute</span>
 						</div>
 					</div>
 
@@ -225,8 +173,7 @@
 					<div class="flex items-center pl-4">
 						<div class="flex min-w-0 flex-1 flex-col justify-center">
 							<div class="flex items-center gap-1.5">
-								<span class="text-2xl leading-tight font-bold text-cream-100"
-									>{strom.kwhMonat}</span
+								<span class="text-2xl leading-tight font-bold text-cream-100">{strom.kwhMonat}</span
 								>
 								<span class="text-cream-200 text-sm font-medium">kWh</span>
 								<span
@@ -235,13 +182,14 @@
 									{strom.kostenMonat} €
 								</span>
 							</div>
-							<span class="text-cream-100/50 mt-0.5 truncate text-sm">Diesen Monat</span>
+							<span class="mt-0.5 truncate text-sm text-cream-100/50">Diesen Monat</span>
 						</div>
 					</div>
 				</div>
 
 				<!-- Heizung / Warmwasser -->
 				<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
+                <span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Haus</span>
 					<div class="grid grid-cols-2 divide-x divide-cream-100/10">
 						<div class="flex items-center gap-3">
 							<div
@@ -277,11 +225,13 @@
 							Heizung {heizung.an ? 'an' : 'aus'}
 						</span>
 						<span
-							class="inline-flex w-fit items-center gap-1.5 rounded-full border mx-2 px-2 py-1.5 text-[11px] font-bold tracking-wide uppercase {warmwasser.aufbereitung
+							class="mx-2 inline-flex w-fit items-center gap-1.5 rounded-full border px-2 py-1.5 text-[11px] font-bold tracking-wide uppercase {warmwasser.aufbereitung
 								? 'border-orange-500/30 text-orange-500'
 								: 'border-cream-100/15 text-cream-100/50'}"
 						>
-							<Waves class="h-4.5 w-4.5 stroke-3 {warmwasser.aufbereitung ? 'animate-pulse' : ''}" />
+							<Waves
+								class="h-4.5 w-4.5 stroke-3 {warmwasser.aufbereitung ? 'animate-pulse' : ''}"
+							/>
 							Aufwärmen {warmwasser.aufbereitung ? 'an' : 'aus'}
 						</span>
 					</div>
@@ -290,6 +240,7 @@
 				<!-- Bad -->
 				<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
 					<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Bad</span>
+
 					<div class="grid grid-cols-2 divide-x divide-cream-100/10">
 						<div class="flex items-center gap-3">
 							<div
@@ -315,39 +266,68 @@
 						</div>
 					</div>
 
-					<!-- Lüfter-Toggle -->
-					<button
-						type="button"
-						role="switch"
-						aria-checked={luefterAn}
-						aria-label={luefterAn
-							? `Badlüfter ausschalten, noch ${restlaufzeitMinuten} Minuten aktiv`
-							: 'Badlüfter einschalten'}
-						onclick={() => setLuefter(!luefterAn)}
-						class="flex h-10 w-64 self-center items-center justify-center gap-2 rounded-full border border-cream-100/10 bg-navy-950 transition-colors {luefterAn
-							? 'bg-teal-500'
-							: 'bg-navy-950'}"
+					<!-- Lüfter Segmented Control -->
+					<div
+						role="radiogroup"
+						aria-label="Lüfter-Modus auswählen"
+						class="flex h-10 w-full max-w-xs items-center justify-between self-center rounded-full border border-cream-100/10 bg-navy-950 p-1"
 					>
-						<Fan
-							class="h-6 w-6 stroke-2 {luefterAn ? 'text-navy-950' : 'text-cream-100/40'}"
-							style={luefterAn ? 'animation: fan-spin 1.4s linear infinite;' : ''}
-						/>
-						<span
-							class="text-[11px] font-bold tracking-wide uppercase {luefterAn
-								? 'text-navy-950'
-								: 'text-cream-100/40'}"
+						<!-- Auto -->
+						<button
+							type="button"
+							role="radio"
+							aria-checked={modus === 'auto'}
+							onclick={() => (modus = 'auto')}
+							class="flex flex-1 items-center justify-center gap-1.5 rounded-full py-1.5 transition-colors {modus ===
+							'auto'
+								? 'bg-teal-500 font-bold text-navy-950'
+								: 'text-cream-100/40 hover:text-cream-100/70'}"
 						>
-							{luefterAn ? `Restlaufzeit ${restlaufzeitMinuten} Min` : 'Lüfter ist Aus'}
-						</span>
-					</button>
+							<Sparkles class="h-5 w-5 stroke-2 {modus === 'auto' ? 'animate-pulse' : ''}" />
+							<span class="text-[10px] tracking-wide uppercase">Auto</span>
+						</button>
+
+						<!-- Ein (10 Min) -->
+						<button
+							type="button"
+							role="radio"
+							aria-checked={modus === 'timer'}
+							onclick={() => (modus = 'timer')}
+							class="flex flex-1 items-center justify-center gap-1.5 rounded-full py-1.5 transition-colors {modus ===
+							'timer'
+								? 'bg-teal-500 font-bold text-navy-950'
+								: 'text-cream-100/40 hover:text-cream-100/70'}"
+						>
+							<Fan
+								class="h-5 w-5 stroke-2 {modus === 'timer' ? 'animate-spin' : ''}"
+								style={modus === 'timer' ? 'animation-duration: 1.4s;' : ''}
+							/>
+							<span class="text-[10px] tracking-wide uppercase">
+								{modus === 'timer' ? `${restlaufzeitMinuten} Min` : '10 min'}
+							</span>
+						</button>
+
+						<!-- Aus -->
+						<button
+							type="button"
+							role="radio"
+							aria-checked={modus === 'aus'}
+							onclick={() => (modus = 'aus')}
+							class="flex flex-1 items-center justify-center gap-1.5 rounded-full py-1.5 transition-colors {modus ===
+							'aus'
+								? 'bg-cream-100/10 font-bold text-cream-100'
+								: 'text-cream-100/40 hover:text-cream-100/70'}"
+						>
+							<Power class="h-5 w-5 stroke-2" />
+							<span class="text-[10px] tracking-wide uppercase">Aus</span>
+						</button>
+					</div>
 				</div>
 
 				<!-- Keller -->
 				<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
 					<div class="relative flex items-center">
-						<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase"
-							>Keller</span
-						>
+						<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Keller</span>
 
 						{#if taupunktStatus}
 							<div
@@ -355,7 +335,7 @@
 				{taupunktStatus.risiko ? 'bg-orange-500/10 text-orange-400' : 'bg-teal-500/10 text-teal-500'}"
 							>
 								{#if taupunktStatus.risiko}
-									<TriangleAlert class="h-4.5 w-4.5 stroke-2 animate-pulse" />
+									<TriangleAlert class="h-4.5 w-4.5 animate-pulse stroke-2" />
 									Kondensationsrisiko
 								{:else}
 									<CircleCheck class="h-3.5 w-3.5 stroke-2" />
@@ -403,9 +383,7 @@
 						>
 							<DoorOpen class="h-5 w-5 stroke-3 text-teal-500" />
 						</div>
-						<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase"
-							>Haustür</span
-						>
+						<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Haustür</span>
 					</div>
 
 					<div
@@ -456,7 +434,5 @@
 				</div>
 			</div>
 		</main>
-
-		
 	</div>
 </div>
