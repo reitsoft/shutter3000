@@ -2,6 +2,14 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+	overscroll-behavior: none; /* verhindert Pull-to-Refresh/Bounce-Scroll auf iOS */
+  background-color: var(--color-navy-950);
+}
+
 @theme {
   --color-navy-950: #0a1c30;
   --color-navy-900: #0f2740;
@@ -28,8 +36,3 @@
   }
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: var(--color-navy-950);
-}
