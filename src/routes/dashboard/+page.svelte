@@ -154,45 +154,37 @@
 
     <main class="w-full max-w-md flex-1 self-center overflow-y-auto px-4 pb-4">
         <div class="flex flex-col gap-4">
-            <!-- Stromverbrauch -->
-<div class="flex flex-col gap-3 rounded-2xl bg-navy-900 p-4">
-    <!-- Heute -->
-    <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3.5">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10">
-                <Zap class="h-5 w-5 text-orange-500" />
-            </div>
-            <div>
-                <div class="text-xl font-bold text-cream-100 leading-none">
-                    {strom.kwhHeute} <span class="text-sm font-normal text-cream-200">kWh</span>
-                </div>
-                <div class="mt-1 text-xs text-cream-200">Verbrauch heute</div>
-            </div>
+           <!-- Stromverbrauch -->
+<div class="grid grid-cols-2 divide-x divide-navy-800 rounded-2xl bg-navy-900 p-4">
+    <!-- Verbrauch heute -->
+    <div class="flex items-center gap-3 pr-4">
+        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-500/10">
+            <Zap class="h-6 w-6 text-orange-500" />
         </div>
-        <span class="rounded-lg bg-orange-500/10 px-2.5 py-1 text-xs font-semibold text-orange-500">
-            {strom.kostenHeute} €
-        </span>
+        <div class="flex min-w-0 flex-1 flex-col justify-center">
+            <div class="flex items-center gap-1.5">
+                <span class="text-2xl font-bold leading-tight text-cream-100">{strom.kwhHeute}</span>
+                <span class="text-sm font-medium text-cream-200">kWh</span>
+                <span class="ml-auto rounded-md bg-orange-500/10 px-2 py-0.5 text-xs font-bold text-orange-500">
+                    {strom.kostenHeute} €
+                </span>
+            </div>
+            <span class="mt-0.5 text-sm text-cream-200 truncate">Verbrauch heute</span>
+        </div>
     </div>
 
-    <!-- Trennlinie -->
-    <div class="h-px w-full bg-navy-800"></div>
-
     <!-- Diesen Monat -->
-    <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3.5 pl-0.5">
-            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-navy-800">
-                <Zap class="h-4 w-4 text-cream-200" />
+    <div class="flex items-center pl-4">
+        <div class="flex min-w-0 flex-1 flex-col justify-center">
+            <div class="flex items-center gap-1.5">
+                <span class="text-2xl font-bold leading-tight text-cream-100">{strom.kwhMonat}</span>
+                <span class="text-sm font-medium text-cream-200">kWh</span>
+                <span class="ml-auto rounded-md bg-navy-800 px-2 py-0.5 text-xs font-bold text-cream-100">
+                    {strom.kostenMonat} €
+                </span>
             </div>
-            <div>
-                <div class="text-base font-bold text-cream-100 leading-none">
-                    {strom.kwhMonat} <span class="text-xs font-normal text-cream-200">kWh</span>
-                </div>
-                <div class="mt-0.5 text-[11px] text-cream-200">Diesen Monat</div>
-            </div>
+            <span class="mt-0.5 text-sm text-cream-200 truncate">Diesen Monat</span>
         </div>
-        <span class="rounded-lg bg-navy-800 px-2.5 py-1 text-xs font-semibold text-cream-100">
-            {strom.kostenMonat} €
-        </span>
     </div>
 </div>
 
