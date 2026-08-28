@@ -8,7 +8,7 @@
   const items = [
     { href: resolve('/'), label: 'Haus', icon: House },
     { href: resolve('/shutters'), label: 'Rollos', icon: PanelsTopLeft },
-    { href: resolve('/electricity'), label: 'Strom', icon: Zap }
+    { href: resolve('/energy'), label: 'Energie', icon: Zap }
   ];
 </script>
 
