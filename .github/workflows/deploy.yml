@@ -17,7 +17,7 @@ jobs:
 
       - name: Deploy via Tailscale SSH
         run: |
-          tailscale ssh -t -t ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          tailscale ssh -- -t -t ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
             cd /opt/apps/dahoam
             git pull --ff-only origin main
