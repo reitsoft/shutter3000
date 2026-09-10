@@ -1,15 +1,10 @@
 <script lang="ts">
+	import Viewport from '$lib/components/Viewport.svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import ShutterRow from '$lib/components/shutters/ShutterRow.svelte';
 	import { shutterStore } from '$lib/stores/shutters.sse.svelte';
 	import { SHUTTER_LIST } from '$lib/config/shutters';
 	import { ArrowUp, ArrowDown, Octagon, LoaderCircle } from '@lucide/svelte';
-
-	// Automatische Skalierung: verhindert Scrollbalken, indem der Content
-	// bei zu wenig Platz proportional verkleinert wird
-	let outerHeight = $state(0);
-	let contentHeight = $state(0);
-	let scale = $derived(contentHeight > 0 ? Math.min(1, outerHeight / contentHeight) : 1);
 
 	$effect(() => {
 		const disconnect = shutterStore.connect();
@@ -57,30 +52,23 @@
 <svelte:head>
 	<title>Rolläden</title>
 </svelte:head>
-<div
-	bind:clientHeight={outerHeight}
-	class="flex h-full w-full items-start justify-center overflow-hidden bg-navy-950"
->
-	<div
-		bind:clientHeight={contentHeight}
-		style="min-height: {outerHeight}px; transform: scale({scale}); transform-origin: top center; width: 28rem;"
-		class="flex flex-col text-cream-100 select-none"
-	>
-		<AppHeader title="Rollos" />
+<Viewport>
+	<AppHeader title="Rollos" />
 
-		<main class="flex w-full max-w-md flex-1 flex-col justify-between overflow-y-auto px-4">
-			{#if isConnecting}
-				<div class="flex flex-1 flex-col items-center justify-center gap-3 text-cream-100/50">
-					<LoaderCircle class="h-6 w-6 animate-spin text-teal-500" />
-					<span class="text-xs font-bold tracking-wider uppercase">Verbinde…</span>
-				</div>
-			{:else}
-				{#each SHUTTER_LIST as shutter (shutter.id)}
-					<ShutterRow {shutter} />
-				{/each}
-			{/if}
-		</main>
+	<main class="flex w-full max-w-md flex-1 flex-col justify-between overflow-y-auto px-4">
+		{#if isConnecting}
+			<div class="flex flex-1 flex-col items-center justify-center gap-3 text-cream-100/50">
+				<LoaderCircle class="h-6 w-6 animate-spin text-teal-500" />
+				<span class="text-xs font-bold tracking-wider uppercase">Verbinde…</span>
+			</div>
+		{:else}
+			{#each SHUTTER_LIST as shutter (shutter.id)}
+				<ShutterRow {shutter} />
+			{/each}
+		{/if}
+	</main>
 
+	{#snippet footer()}
 		<footer class="shrink-0 bg-navy-950 p-4">
 			<div class="mx-auto grid w-full max-w-md grid-cols-3 gap-3">
 				<button
@@ -126,5 +114,5 @@
 				</button>
 			</div>
 		</footer>
-	</div>
-</div>
+	{/snippet}
+</Viewport>
