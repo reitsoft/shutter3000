@@ -16,11 +16,12 @@ jobs:
           tags: tag:ci
 
       - name: Deploy via Tailscale SSH
-        run: |
-          tailscale ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /opt/apps/dahoam
-            git pull origin main
-            pnpm install
-            pnpm build
-            pm2 restart dahoam
-          EOF
+    run: |
+      tailscale ssh -t -t ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+        set -e
+        cd /opt/apps/dahoam
+        git pull --ff-only origin main
+        pnpm install --frozen-lockfile
+        pnpm build
+        pm2 restart dahoam
+      EOF
