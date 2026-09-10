@@ -26,7 +26,7 @@
 		<link rel="manifest" href={webManifestHref} />
 	{/if}
 </svelte:head>
-<div class="h-dvh w-full bg-navy-950 text-cream-100" style="padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));">
+<div class="h-dvh w-full bg-navy-950 text-cream-100" style="padding-bottom: var(--nav-height);">
 	<InstallPWA />
 	{@render children()}
 </div>
