@@ -8,7 +8,7 @@
 
 	let { children } = $props();
 
-	let webManifestLink = $derived(pwaInfo?.webManifest?.linkTag ?? '');
+	let webManifestHref = $derived(pwaInfo?.webManifest?.href ?? '');
 
 	useRegisterSW({
 		onRegistered(r) {
@@ -22,9 +22,11 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	{@html webManifestLink}
+	{#if webManifestHref}
+		<link rel="manifest" href={webManifestHref} />
+	{/if}
 </svelte:head>
-<div class="h-dvh w-full bg-navy-950 text-cream-100" style="padding-bottom: var(--nav-height);">
+<div class="h-dvh w-full bg-navy-950 text-cream-100" style="padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));">
 	<InstallPWA />
 	{@render children()}
 </div>

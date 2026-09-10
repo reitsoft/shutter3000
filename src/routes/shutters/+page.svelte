@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AppHeader from '$lib/components/AppHeader.svelte';
 	import ShutterRow from '$lib/components/shutters/ShutterRow.svelte';
 	import { shutterStore } from '$lib/stores/shutters.sse.svelte';
 	import { SHUTTER_LIST } from '$lib/config/shutters';
@@ -24,7 +25,7 @@
 	let isStoppingAll = $state(false);
 
 	function anyBusy() {
-		return isOpeningAll || isClosingAll || isStoppingAll;
+		return isConnecting || isOpeningAll || isClosingAll || isStoppingAll;
 	}
 
 	async function allTo(pos: number, busyFlag: 'open' | 'close') {
@@ -65,26 +66,19 @@
 		style="min-height: {outerHeight}px; transform: scale({scale}); transform-origin: top center; width: 28rem;"
 		class="flex flex-col text-cream-100 select-none"
 	>
-		<header class="shrink-0 flex w-full items-center justify-between px-6 pt-7 pb-2">
-			<div>
-				<h1
-					class="font-handwriting font-bold tracking-wide whitespace-nowrap text-cream-100"
-					style="font-size: clamp(1.25rem, 7vw, 2.25rem);"
-				>
-					FM13 - Dahoam is Dahoam
-				</h1>
-			</div>
-			{#if isConnecting}
-				<div class="absolute top-6 right-6 flex items-center gap-2 text-xs text-cream-100/60">
-					<LoaderCircle class="h-4 w-4 animate-spin" />
-				</div>
-			{/if}
-		</header>
+		<AppHeader title="Rollos" />
 
 		<main class="flex w-full max-w-md flex-1 flex-col justify-between overflow-y-auto px-4">
-			{#each SHUTTER_LIST as shutter (shutter.id)}
-				<ShutterRow {shutter} />
-			{/each}
+			{#if isConnecting}
+				<div class="flex flex-1 flex-col items-center justify-center gap-3 text-cream-100/50">
+					<LoaderCircle class="h-6 w-6 animate-spin text-teal-500" />
+					<span class="text-xs font-bold tracking-wider uppercase">Verbinde…</span>
+				</div>
+			{:else}
+				{#each SHUTTER_LIST as shutter (shutter.id)}
+					<ShutterRow {shutter} />
+				{/each}
+			{/if}
 		</main>
 
 		<footer class="shrink-0 bg-navy-950 p-4">

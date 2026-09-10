@@ -17,7 +17,7 @@
 				Zählerstand
 			</span>
 			<div class="flex items-baseline gap-1">
-				<span class="text-3xl leading-tight font-bold text-cream-100">
+				<span class="text-2xl leading-tight font-bold text-cream-100">
 					{ZAEHLERSTAND.toLocaleString('de-DE', {
 						minimumFractionDigits: 1,
 						maximumFractionDigits: 1
