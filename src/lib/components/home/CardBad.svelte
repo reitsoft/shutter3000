@@ -4,7 +4,7 @@
 	type Modus = 'AUTO' | 'TIMER' | 'AUS';
 
 	// Dummy-Daten
-	const bad = { temp: 22.8, feuchtigkeit: 62 };
+	const bad = { temp: 23.8, feuchtigkeit: 62 };
 
 	// Konfiguration
 	const HUMIDITY_THRESHOLD = 70; // Grenzwert z.B. 70% Feuchtigkeit
