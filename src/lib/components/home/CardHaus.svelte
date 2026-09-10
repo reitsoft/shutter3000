@@ -7,10 +7,10 @@
 </script>
 
 <!-- Heizung / Warmwasser -->
-<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
-	<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Haus</span>
+<div class="flex flex-col gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
+	<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase pl-2">Haus</span>
 	<div class="grid grid-cols-2 divide-x divide-cream-100/10">
-		<div class="flex items-center gap-3">
+		<div class="flex items-center gap-3 pb-2">
 			<div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-500/10">
 				<Thermometer class="h-5 w-5 stroke-3 text-teal-500" />
 			</div>
@@ -19,7 +19,7 @@
 				<div class="text-xs text-cream-100/50">Temperatur</div>
 			</div>
 		</div>
-		<div class="flex items-center gap-3 pl-4">
+		<div class="flex items-center gap-3 pl-4 pb-2">
 			<div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-500/10">
 				<Droplets class="h-5 w-5 stroke-3 text-orange-500/80" />
 			</div>

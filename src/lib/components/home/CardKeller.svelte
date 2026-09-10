@@ -44,9 +44,9 @@
 </script>
 
 <!-- Keller -->
-<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
+<div class="flex flex-col gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
 	<div class="relative flex items-center">
-		<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Keller</span>
+		<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase pl-2">Keller</span>
 
 		{#if taupunktStatus}
 			<div

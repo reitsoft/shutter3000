@@ -32,6 +32,8 @@ const sankeyData: ChartData<'sankey', { from: string; to: string; flow: number }
 				{ from: 'Gebäude', to: 'Warmwasser', flow: sumWarmwasser },
 				{ from: 'Gebäude', to: 'Heizung', flow: sumHeizung }
 			],
+			nodeWidth: 12, // schmaler statt Standard (10)
+			nodePadding: 32, // größerer Abstand zwischen den Balken (Standard: 10)
 			colorFrom: (ctx) => {
 				const key = ctx.dataset.data[ctx.dataIndex].from;
 				if (key === 'PV-Erzeugung') return '#e8632c';
@@ -80,7 +82,7 @@ const sankeyData: ChartData<'sankey', { from: string; to: string; flow: number }
 	};
 </script>
 
-<div class="rounded-2xl bg-navy-900 p-5 pb-3">
+<div class="rounded-2xl bg-navy-900 p-3 pb-2">
 	<div class="flex items-center justify-between px-1 pb-3">
 		<div class="flex items-center gap-3">
 			<div
@@ -90,7 +92,7 @@ const sankeyData: ChartData<'sankey', { from: string; to: string; flow: number }
 			</div>
 			<div class="flex flex-col">
 				<span class="text-xs font-medium tracking-wide text-cream-100/40 uppercase">
-					Stromfluss (Jahr)
+					Stromfluss
 				</span>
 				<div class="flex items-baseline gap-1">
 					<span class="text-2xl font-semibold tracking-tight text-cream-100">
@@ -106,7 +108,7 @@ const sankeyData: ChartData<'sankey', { from: string; to: string; flow: number }
 				<span class="h-2 w-2 rounded-full bg-[#22c55e]"></span>
 				<span
 					>Autarkiegrad: <span class="text-white/40"
-						>{Math.round((DIREKTVERBRAUCH / sumHaushalt) * 100)}%</span
+						>{Math.round((DIREKTVERBRAUCH / GEBAEUDE_GESAMT) * 100)}%</span
 					></span
 				>
 			</div>

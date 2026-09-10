@@ -129,7 +129,7 @@
 	};
 </script>
 
-<div class="rounded-2xl bg-navy-900 p-5 pb-3">
+<div class="rounded-2xl bg-navy-900 p-3 pb-2">
 	<div class="flex items-center justify-between px-1 pb-3">
 		<!-- Linker Block (Verbrauch) -->
 		<div class="flex items-center gap-3">

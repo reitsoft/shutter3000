@@ -5,7 +5,7 @@
     const ZAEHLERSTAND = 12237.0;
 </script>
 
-<div class="rounded-2xl bg-navy-900 p-4">
+<div class="rounded-2xl bg-navy-900 p-3 pb-2">
 	<div class="flex items-center gap-5">
 		<div
 			class="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500/20 text-orange-500"

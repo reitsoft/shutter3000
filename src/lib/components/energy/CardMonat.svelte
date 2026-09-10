@@ -156,14 +156,14 @@
 				display: false,
 				grid: { display: false },
 				beginAtZero: true,
-				suggestedMax: maxVerbrauch * 1.2
+				suggestedMax: maxVerbrauch * 1.2 // Skaliert die Y-Achse leicht über den Maximalwert hinaus, um Platz für das Badge zu schaffen
 			}
 		}
 	};
 </script>
 
 <!-- Monatsverbrauch-Card mit Balkendiagramm -->
-<div class="rounded-2xl bg-navy-900 p-5 pb-2">
+<div class="rounded-2xl bg-navy-900 p-3 pb-2">
 	<!-- Header Nebeneinander -->
 	<div class="flex items-center justify-between px-1 pb-2">
 		<!-- Diesen Monat -->

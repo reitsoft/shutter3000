@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Check, ChevronsRight, DoorOpen, FingerprintPattern } from '@lucide/svelte';
+	import { Check, ChevronsRight, FingerprintPattern } from '@lucide/svelte';
 
 	// Türöffner (Slide to Unlock)
 	const TUER_KNOB_GROESSE = 48;
@@ -91,14 +91,9 @@
 </script>
 
 <!-- Haustür Card -->
-<div class="flex flex-col gap-4 rounded-3xl border border-navy-800 bg-navy-900 p-5">
+<div class="flex flex-col gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
 	<div class="flex items-center justify-between">
-		<div class="flex items-center gap-3">
-			<div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-500/10">
-				<DoorOpen class="h-5 w-5 stroke-3 text-teal-500" />
-			</div>
-			<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase">Haustür</span>
-		</div>
+		<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase pl-2">Haustür</span>
 
 		<!-- Biometrie-Indikator Badge -->
 		<div
@@ -108,7 +103,6 @@
 			<span class="text-[10px] font-semibold tracking-wider uppercase">Bio-ID</span>
 		</div>
 	</div>
-
 	<div
 		bind:clientWidth={tuerTrackBreite}
 		class="relative h-15 w-full overflow-hidden rounded-full border border-cream-100/10 bg-navy-950 p-1.5"
