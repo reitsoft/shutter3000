@@ -13,7 +13,7 @@
 	const TIMER_RUN_TIME_MS = 10 * 60 * 1000; // 10 Minuten Manuell
 
 	// Aktueller Zustand (EINZIGE Quelle der Wahrheit für den Modus)
-	let currentMode = $state<Modus>('AUS');
+	let currentMode = $state<Modus>('AUTO');
 	let isFanOn = $state(false);
 	let lastAutoOffTime = $state(0); // Zeitstempel, wann der Lüfter zuletzt im AUTO-Modus ausging
 
