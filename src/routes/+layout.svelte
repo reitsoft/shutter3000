@@ -1,5 +1,6 @@
 <script lang="ts">
 	import './layout.css';
+	import { pwaInfo } from 'virtual:pwa-info';
 	import { useRegisterSW } from 'virtual:pwa-register/svelte';
 	import InstallPWA from '$lib/InstallPWA.svelte';
 	import favicon from '$lib/assets/favicon.svg';
@@ -7,7 +8,8 @@
 
 	let { children } = $props();
 
-	// Registriert den Service Worker automatisch
+	let webManifestLink = $derived(pwaInfo?.webManifest?.linkTag ?? '');
+
 	useRegisterSW({
 		onRegistered(r) {
 			console.log('SW Registered:', r);
@@ -18,11 +20,13 @@
 	});
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+	<link rel="icon" href={favicon} />
+	{@html webManifestLink}
+</svelte:head>
 <div class="h-dvh w-full bg-navy-950 text-cream-100" style="padding-bottom: var(--nav-height);">
 	<InstallPWA />
 	{@render children()}
 </div>
 
 <AppNav />
-

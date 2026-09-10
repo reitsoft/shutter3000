@@ -1,23 +1,32 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let deferredPrompt: any = $state(null);
+	interface BeforeInstallPromptEvent extends Event {
+		prompt(): Promise<void>;
+		userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+	}
+
+	let deferredPrompt: BeforeInstallPromptEvent | null = $state(null);
 	let showInstallButton = $state(false);
 
 	onMount(() => {
 		const handleBeforeInstallPrompt = (e: Event) => {
-			// Verhindert das automatische Browser-Banner
 			e.preventDefault();
-			// Speichert das Event für die spätere Ausführung
-			deferredPrompt = e;
-			// Zeigt deinen eigenen Button an
+			deferredPrompt = e as BeforeInstallPromptEvent;
 			showInstallButton = true;
 		};
 
+		const handleAppInstalled = () => {
+			showInstallButton = false;
+			deferredPrompt = null;
+		};
+
 		window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+		window.addEventListener('appinstalled', handleAppInstalled);
 
 		return () => {
 			window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+			window.removeEventListener('appinstalled', handleAppInstalled);
 		};
 	});
 
