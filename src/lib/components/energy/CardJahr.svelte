@@ -1,3 +1,4 @@
+<!-- src/lib/components/energy/CardJahr.svelte -->
 <script lang="ts">
 	import { ChartNoAxesColumnIncreasing } from '@lucide/svelte';
 	import { Bar } from 'svelte-chartjs';
@@ -17,7 +18,6 @@
 	} from 'chart.js';
 	import annotationPlugin from 'chartjs-plugin-annotation';
 
-	// Chart.js Module für Balkendiagramm registrieren
 	ChartJS.register(
 		Title,
 		Tooltip,
@@ -31,62 +31,46 @@
 		annotationPlugin
 	);
 
-	// 1. Monats-Labels für das Jahr
 	const monateLabels = [
-		'Jan',
-		'Feb',
-		'Mär',
-		'Apr',
-		'Mai',
-		'Jun',
-		'Jul',
-		'Aug',
-		'Sep',
-		'Okt',
-		'Nov',
-		'Dez'
+		'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'
 	];
 
-	// 2. Mockdaten pro Kategorie (in kWh)
 	const heizungData = [320, 280, 190, 70, 10, 0, 0, 0, 15];
 	const warmwasserData = [85, 80, 85, 80, 75, 70, 70, 70, 85];
 	const haushaltData = [145, 140, 145, 135, 130, 125, 130, 135, 140];
 
-	const sumHeizung = heizungData.reduce((acc, v) => acc + v, 0); // 885 kWh
-	const sumWarmwasser = warmwasserData.reduce((acc, v) => acc + v, 0); // 700 kWh
-	const sumHaushalt = haushaltData.reduce((acc, v) => acc + v, 0); // 1225 kWh
+	const sumHeizung = heizungData.reduce((acc, v) => acc + v, 0);
+	const sumWarmwasser = warmwasserData.reduce((acc, v) => acc + v, 0);
+	const sumHaushalt = haushaltData.reduce((acc, v) => acc + v, 0);
 
-	// Summe aller Monate berechnen
 	const VERBRAUCH_JAHR = [...heizungData, ...warmwasserData, ...haushaltData].reduce(
 		(acc, val) => acc + val,
 		0
 	);
 
-	// 3. Chart.js Data (Gestapelte Datensätze)
 	const jahrChartData: ChartData<'bar'> = {
 		labels: monateLabels,
 		datasets: [
 			{
 				label: 'Haushalt',
 				data: haushaltData,
-				backgroundColor: '#3b82f6', // Tailwind blue-500
+				backgroundColor: '#3b82f6',
 				borderRadius: { topLeft: 0, topRight: 0, bottomLeft: 4, bottomRight: 4 }
 			},
 			{
 				label: 'Warmwasser',
 				data: warmwasserData,
-				backgroundColor: '#06b6d4' // Tailwind cyan-500
+				backgroundColor: '#06b6d4'
 			},
 			{
 				label: 'Heizung',
 				data: heizungData,
-				backgroundColor: '#e8632c', // Dein Akzent-Orange
+				backgroundColor: '#e8632c',
 				borderRadius: { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 }
 			}
 		]
 	};
 
-	// 4. Chart.js Options (Stacked-Modus)
 	const jahrChartOptions: ChartOptions<'bar'> = {
 		responsive: true,
 		maintainAspectRatio: false,
@@ -100,7 +84,6 @@
 				callbacks: {
 					title: (items) => items[0].label,
 					label: (context) => ` ${context.dataset.label}: ${context.parsed.y} kWh`,
-					// Zeigt im Tooltip zusätzlich den Gesamtwert des Monats an
 					footer: (items) => {
 						const total = items.reduce((sum, item) => sum + (item.parsed.y ?? 0), 0);
 						return `Gesamt: ${total} kWh`;
@@ -110,7 +93,7 @@
 		},
 		scales: {
 			x: {
-				stacked: true, // Wichtig für gestapelte Balken!
+				stacked: true,
 				grid: { display: false },
 				border: { display: false },
 				ticks: {
@@ -120,7 +103,7 @@
 				}
 			},
 			y: {
-				stacked: true, // Wichtig für gestapelte Balken!
+				stacked: true,
 				display: false,
 				grid: { display: false },
 				beginAtZero: true
@@ -129,12 +112,12 @@
 	};
 </script>
 
-<div class="rounded-2xl bg-navy-900 p-3 pb-2">
-	<div class="flex items-center justify-between px-1 pb-3">
+<div class="flex h-full flex-col overflow-hidden rounded-2xl bg-navy-900 p-3">
+	<div class="flex shrink-0 items-center justify-between px-1 pb-3">
 		<!-- Linker Block (Verbrauch) -->
 		<div class="flex items-center gap-3">
 			<div
-				class="flex h-9 w-9 items-center justify-center rounded-xl bg-cream-100/10 text-cream-100/70"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream-100/10 text-cream-100/70"
 			>
 				<ChartNoAxesColumnIncreasing class="h-5 w-5" />
 			</div>
@@ -152,7 +135,7 @@
 		</div>
 
 		<!-- Rechter Block: self-end schiebt es ganz nach unten -->
-		<div class="gap-0.8 flex flex-col self-end pb-0.5 text-xs font-medium text-cream-100/60">
+		<div class="flex flex-col gap-0.5 self-end pb-0.5 text-xs font-medium text-cream-100/60">
 			<div class="flex items-center gap-1.5 whitespace-nowrap">
 				<span class="h-2 w-2 rounded-full bg-orange-500"></span>
 				<span>Heizung: <span class="text-white/40">{sumHeizung} kWh</span></span>
@@ -169,7 +152,7 @@
 	</div>
 
 	<!-- svelte-chartjs Stacked Bar Component -->
-	<div class="h-32 w-full pt-1">
+	<div class="relative w-full flex-1 overflow-hidden pt-1">
 		<Bar data={jahrChartData} options={jahrChartOptions} />
 	</div>
 </div>

@@ -1,3 +1,4 @@
+<!-- src/lib/components/energy/CardMonat.svelte -->
 <script lang="ts">
 	import { RotateCcwClock, Calendar } from '@lucide/svelte';
 	import { Bar } from 'svelte-chartjs';
@@ -163,13 +164,13 @@
 </script>
 
 <!-- Monatsverbrauch-Card mit Balkendiagramm -->
-<div class="rounded-2xl bg-navy-900 p-3 pb-2">
+<div class="flex h-full flex-col overflow-hidden rounded-2xl bg-navy-900 p-3">
 	<!-- Header Nebeneinander -->
-	<div class="flex items-center justify-between px-1 pb-2">
+	<div class="flex shrink-0 items-center justify-between px-1 pb-2">
 		<!-- Diesen Monat -->
 		<div class="flex items-center gap-3">
 			<div
-				class="flex h-9 w-9 items-center justify-center rounded-xl bg-cream-100/10 text-cream-100/70"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream-100/10 text-cream-100/70"
 			>
 				<Calendar class="h-5 w-5" />
 			</div>
@@ -189,7 +190,7 @@
 		<!-- Vormonat -->
 		<div class="flex items-center gap-3">
 			<div
-				class="flex h-9 w-9 items-center justify-center rounded-xl bg-cream-100/5 text-cream-100/40"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream-100/5 text-cream-100/40"
 			>
 				<RotateCcwClock class="h-5 w-5" />
 			</div>
@@ -208,7 +209,7 @@
 	</div>
 
 	<!-- svelte-chartjs Bar Component -->
-	<div class="h-28 w-full pt-2">
+	<div class="relative h-28 w-full flex-1 overflow-hidden pt-2">
 		<Bar data={chartData} options={chartOptions} />
 	</div>
 </div>

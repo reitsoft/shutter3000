@@ -1,3 +1,4 @@
+<!-- src/routes/energy/+page.svelte -->
 <script lang="ts">
 	import Viewport from '$lib/components/Viewport.svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
@@ -9,11 +10,11 @@
 
 <Viewport>
 	<AppHeader title="Energie" />
-	
-	<main class="flex w-full flex-col gap-4 px-4 pb-4">
+
+	<main class="grid min-h-0 w-full flex-1 grid-rows-[auto_11.75rem_13.75rem_1.5fr] gap-3 px-4 pb-3">
 		<CardZaehler />
 		<CardMonat />
-        <CardJahr />
+		<CardJahr />
 		<CardStromfluss />
 	</main>
 </Viewport>

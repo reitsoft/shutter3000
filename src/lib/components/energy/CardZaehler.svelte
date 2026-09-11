@@ -1,14 +1,15 @@
+<!-- src/lib/components/energy/CardZaehler.svelte -->
 <script lang="ts">
-    import { Zap } from '@lucide/svelte';
+	import { Zap } from '@lucide/svelte';
 
-    //Dummy-Daten
-    const ZAEHLERSTAND = 12237.0;
+	//Dummy-Daten
+	const ZAEHLERSTAND = 12237.0;
 </script>
 
-<div class="rounded-2xl bg-navy-900 p-3 pb-2">
+<div class="flex h-full flex-col justify-center rounded-2xl bg-navy-900 p-3">
 	<div class="flex items-center gap-5">
 		<div
-			class="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500/20 text-orange-500"
+			class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500/20 text-orange-500"
 		>
 			<Zap class="h-6 w-6" />
 		</div>
@@ -23,7 +24,7 @@
 						maximumFractionDigits: 1
 					})}
 				</span>
-				<span class="text-md text-cream-200/60 font-medium">kWh</span>
+				<span class="text-md font-medium text-cream-200/60">kWh</span>
 			</div>
 		</div>
 	</div>
