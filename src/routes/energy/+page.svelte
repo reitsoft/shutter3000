@@ -11,7 +11,7 @@
 <Viewport>
 	<AppHeader title="Energie" />
 
-	<main class="grid min-h-0 w-full flex-1 grid-rows-[auto_11.75rem_13.75rem_1.5fr] gap-3 px-4 pb-3">
+	<main class="grid min-h-0 w-full flex-1 grid-rows-[auto_11rem_13.75rem_1.5fr] gap-3 px-4 pb-3">
 		<CardZaehler />
 		<CardMonat />
 		<CardJahr />

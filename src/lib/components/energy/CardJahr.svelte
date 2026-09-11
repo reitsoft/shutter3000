@@ -113,7 +113,7 @@
 </script>
 
 <div class="flex h-full flex-col overflow-hidden rounded-2xl bg-navy-900 p-3">
-	<div class="flex shrink-0 items-center justify-between px-1 pb-3">
+	<div class="flex shrink-0 items-center justify-between px-1 pb-1">
 		<!-- Linker Block (Verbrauch) -->
 		<div class="flex items-center gap-3">
 			<div
@@ -152,7 +152,7 @@
 	</div>
 
 	<!-- svelte-chartjs Stacked Bar Component -->
-	<div class="relative w-full flex-1 overflow-hidden pt-1">
+	<div class="relative w-full flex-1 overflow-hidden">
 		<Bar data={jahrChartData} options={jahrChartOptions} />
 	</div>
 </div>

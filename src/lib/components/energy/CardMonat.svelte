@@ -157,7 +157,7 @@
 				display: false,
 				grid: { display: false },
 				beginAtZero: true,
-				suggestedMax: maxVerbrauch * 1.2 // Skaliert die Y-Achse leicht über den Maximalwert hinaus, um Platz für das Badge zu schaffen
+				suggestedMax: maxVerbrauch * 1.3 // Skaliert die Y-Achse leicht über den Maximalwert hinaus, um Platz für das Badge zu schaffen
 			}
 		}
 	};
@@ -166,7 +166,7 @@
 <!-- Monatsverbrauch-Card mit Balkendiagramm -->
 <div class="flex h-full flex-col overflow-hidden rounded-2xl bg-navy-900 p-3">
 	<!-- Header Nebeneinander -->
-	<div class="flex shrink-0 items-center justify-between px-1 pb-2">
+	<div class="flex shrink-0 items-center justify-between px-1 pb-1">
 		<!-- Diesen Monat -->
 		<div class="flex items-center gap-3">
 			<div
@@ -209,7 +209,7 @@
 	</div>
 
 	<!-- svelte-chartjs Bar Component -->
-	<div class="relative h-28 w-full flex-1 overflow-hidden pt-2">
+	<div class="relative h-28 w-full flex-1 overflow-hidden">
 		<Bar data={chartData} options={chartOptions} />
 	</div>
 </div>

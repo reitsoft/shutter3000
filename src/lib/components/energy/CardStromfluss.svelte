@@ -24,19 +24,19 @@
 		datasets: [
 			{
 				data: [
-					{ from: 'PV-Erzeugung', to: 'Gebäude', flow: DIREKTVERBRAUCH },
-					{ from: 'PV-Erzeugung', to: 'Batterie', flow: BATTERIE_GELADEN },
-					{ from: 'PV-Erzeugung', to: 'Einspeisung', flow: STROM_EINGESPEIST },
+					{ from: 'PV', to: 'Gebäude', flow: DIREKTVERBRAUCH },
+					{ from: 'PV', to: 'Batterie', flow: BATTERIE_GELADEN },
+					{ from: 'PV', to: 'Einspeisung', flow: STROM_EINGESPEIST },
 					{ from: 'Netzbezug', to: 'Gebäude', flow: STROM_BEZOGEN },
 					{ from: 'Gebäude', to: 'Haushalt', flow: sumHaushalt },
 					{ from: 'Gebäude', to: 'Warmwasser', flow: sumWarmwasser },
 					{ from: 'Gebäude', to: 'Heizung', flow: sumHeizung }
 				],
-				nodeWidth: 12,
-				nodePadding: 32,
+				nodeWidth: 8,
+				nodePadding: 16,
 				colorFrom: (ctx) => {
 					const key = ctx.dataset.data[ctx.dataIndex].from;
-					if (key === 'PV-Erzeugung') return '#e8632c';
+					if (key === 'PV') return '#e8632c';
 					if (key === 'Netzbezug') return '#64748b';
 					return '#3b82f6';
 				},
@@ -51,7 +51,7 @@
 				},
 				colorMode: 'gradient',
 				labels: {
-					'PV-Erzeugung': 'PV-Erzeugung',
+					PV: 'PV',
 					Netzbezug: 'Netzbezug',
 					Gebäude: 'Gebäude',
 					Batterie: 'Batterie',
@@ -83,7 +83,7 @@
 </script>
 
 <div class="flex h-full flex-col overflow-hidden rounded-2xl bg-navy-900 p-3">
-	<div class="flex shrink-0 items-center justify-between px-1 pb-3">
+	<div class="flex shrink-0 items-center justify-between px-1 pb-1">
 		<div class="flex items-center gap-3">
 			<div
 				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream-100/10 text-cream-100/70"
@@ -123,7 +123,7 @@
 		</div>
 	</div>
 
-	<div class="relative w-full flex-1 overflow-hidden pt-1">
+	<div class="relative w-full flex-1 overflow-hidden pt-0.5">
 		<SvelteChart type="sankey" data={sankeyData} options={sankeyOptions} />
 	</div>
 </div>
