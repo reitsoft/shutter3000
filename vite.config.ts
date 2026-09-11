@@ -58,5 +58,8 @@ export default defineConfig({
 				]
 			}
 		})
-	]
+	],
+	ssr: {
+        noExternal: ['layerchart', 'd3-sankey', 'd3-path', 'd3-shape']
+    }
 });

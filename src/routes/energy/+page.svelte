@@ -5,7 +5,8 @@
 	import CardZaehler from '$lib/components/energy/CardZaehler.svelte';
 	import CardMonat from '$lib/components/energy/CardMonat.svelte';
 	import CardJahr from '$lib/components/energy/CardJahr.svelte';
-	import CardStromfluss from '$lib/components/energy/CardStromfluss.svelte';
+	import CardStromfluss2 from '$lib/components/energy/CardStromfluss2.svelte';
+
 </script>
 
 <Viewport>
@@ -15,6 +16,6 @@
 		<CardZaehler />
 		<CardMonat />
 		<CardJahr />
-		<CardStromfluss />
+		<CardStromfluss2 />
 	</main>
 </Viewport>
