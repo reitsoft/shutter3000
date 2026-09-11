@@ -1,3 +1,4 @@
+<!-- routes/shutters/+page.svelte -->
 <script lang="ts">
 	import Viewport from '$lib/components/Viewport.svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
@@ -13,8 +14,6 @@
 
 	const isConnecting = $derived(Object.keys(shutterStore.states).length === 0);
 
-	// Getrennter Ladezustand pro Aktion, damit nur der jeweils
-	// gedrückte Button einen Spinner zeigt und die anderen währenddessen gesperrt sind.
 	let isOpeningAll = $state(false);
 	let isClosingAll = $state(false);
 	let isStoppingAll = $state(false);
@@ -55,9 +54,9 @@
 <Viewport>
 	<AppHeader title="Rollos" />
 
-	<main class="flex w-full max-w-md flex-1 flex-col justify-between overflow-y-auto px-4">
+	<main class="grid w-full max-w-md min-h-0 flex-1 grid-rows-9 gap-2 px-4 py-2">
 		{#if isConnecting}
-			<div class="flex flex-1 flex-col items-center justify-center gap-3 text-cream-100/50">
+			<div class="col-span-full row-span-full flex flex-col items-center justify-center gap-3 text-cream-100/50">
 				<LoaderCircle class="h-6 w-6 animate-spin text-teal-500" />
 				<span class="text-xs font-bold tracking-wider uppercase">Verbinde…</span>
 			</div>

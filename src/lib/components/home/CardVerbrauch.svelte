@@ -9,8 +9,8 @@
 </script>
 
 <!-- Stromverbrauch -->
-<div class="flex flex-col gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
-	<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase pl-2">Verbrauch</span>
+<div class="flex h-full flex-col justify-center gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
+	<span class="pl-2 text-xs font-bold tracking-wide text-cream-100/50 uppercase">Verbrauch</span>
 
 	<div class="grid grid-cols-2 divide-x divide-navy-800">
 		<!-- Verbrauch heute -->

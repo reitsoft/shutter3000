@@ -35,8 +35,7 @@
 		if (!tuerDragging) return;
 		tuerDragging = false;
 
-		const maxDrag = tuerTrackBreite - TUER_KNOB_GROESSE - 12; // Beispiel-Limit
-		const schwellenwert = maxDrag * 0.85; // Zu 85% nach rechts geschoben?
+		const schwellenwert = tuerMaxDrag * 0.85; // Zu 85% nach rechts geschoben?
 
 		if (tuerDragX >= schwellenwert) {
 			// 1. Biometrie-Scan starten (Smartphone öffnet Fingerabdruck/FaceID Dialog)
@@ -44,7 +43,7 @@
 
 			if (ok) {
 				// 2. Erlaubnis erteilt! Tür entriegeln & MQTT senden
-				tuerDragX = maxDrag;
+				tuerDragX = tuerMaxDrag;
 				tuerEntriegelt = true;
 
 				// Hier deinen MQTT-Aufruf einfügen:
@@ -91,9 +90,9 @@
 </script>
 
 <!-- Haustür Card -->
-<div class="flex flex-col gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
+<div class="flex h-full flex-col justify-center gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
 	<div class="flex items-center justify-between">
-		<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase pl-2">Haustür</span>
+		<span class="pl-2 text-xs font-bold tracking-wide text-cream-100/50 uppercase">Haustür</span>
 
 		<!-- Biometrie-Indikator Badge -->
 		<div

@@ -1,3 +1,4 @@
+<!-- routes/+layout.svelte -->
 <script lang="ts">
 	import './layout.css';
 	import { pwaInfo } from 'virtual:pwa-info';
@@ -26,9 +27,15 @@
 		<link rel="manifest" href={webManifestHref} />
 	{/if}
 </svelte:head>
-<div class="h-dvh w-full bg-navy-950 text-cream-100" style="padding-bottom: var(--nav-height);">
+
+<div
+	class="flex h-dvh w-full flex-col overflow-hidden bg-navy-950 text-cream-100"
+	style="padding-bottom: var(--nav-height);"
+>
 	<InstallPWA />
-	{@render children()}
+	<div class="flex min-h-0 flex-1 flex-col">
+		{@render children()}
+	</div>
 </div>
 
 <AppNav />

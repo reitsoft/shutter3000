@@ -61,6 +61,7 @@
 			turnFanOff();
 		} else if (newMode === 'TIMER') {
 			turnFanOn();
+			restlaufzeitSekunden = TIMER_RUN_TIME_MS / 1000;
 
 			stopTimer = setTimeout(() => {
 				currentMode = 'AUTO';
@@ -73,21 +74,21 @@
 
 	function turnFanOn() {
 		isFanOn = true;
-		mqttClient.publish('shelly/bad_luefter/command', 'on');
+		// mqttClient.publish('shelly/bad_luefter/command', 'on');
 	}
 
 	function turnFanOff() {
 		isFanOn = false;
 		if (stopTimer) clearTimeout(stopTimer);
-		mqttClient.publish('shelly/bad_luefter/command', 'off');
+		// mqttClient.publish('shelly/bad_luefter/command', 'off');
 	}
 </script>
 
 <!-- Bad -->
-<div class="flex flex-col gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
-	<span class="text-xs font-bold tracking-wide text-cream-100/50 uppercase pl-2">Bad</span>
+<div class="flex h-full flex-col justify-between gap-2 rounded-3xl border border-navy-800 bg-navy-900 p-3">
+	<span class="pl-2 text-xs font-bold tracking-wide text-cream-100/50 uppercase">Bad</span>
 
-	<div class="grid grid-cols-2 divide-x divide-cream-100/10 pb-2">
+	<div class="grid grid-cols-2 divide-x divide-cream-100/10">
 		<div class="flex items-center gap-3">
 			<div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-500/10">
 				<Thermometer class="h-5 w-5 stroke-3 text-teal-500" />

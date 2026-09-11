@@ -1,3 +1,4 @@
+<!-- routes/+page.svelte -->
 <script lang="ts">
 	import Viewport from '$lib/components/Viewport.svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
@@ -10,13 +11,13 @@
 </script>
 
 <Viewport>
-		<AppHeader title="Dahoam is Dahoam" />
+	<AppHeader title="Dahoam is Dahoam" />
 
-		<main class="flex w-full flex-col gap-4 px-4 pb-4">
-			<CardVerbrauch />
-			<CardHaus />
-			<CardBad />
-			<CardKeller />
-			<CardHaustuer />
-		</main>
+	<main class="grid min-h-0 flex-1 grid-rows-[auto_1.2fr_1.4fr_0.8fr_auto] gap-3 px-4 pb-3">
+		<CardVerbrauch />
+		<CardHaus />
+		<CardBad />
+		<CardKeller />
+		<CardHaustuer />
+	</main>
 </Viewport>

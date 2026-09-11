@@ -1,3 +1,4 @@
+<!-- src/lib/components/shutters/ShutterRow.svelte -->
 <script lang="ts">
 	import { shutterStore } from '$lib/stores/shutters.sse.svelte';
 
@@ -86,14 +87,14 @@
 	}}
 />
 
-<div class="flex w-full flex-col gap-1">
+<div class="flex h-full w-full min-h-0 flex-col justify-center gap-1">
 	<!-- Label über dem Slider -->
 	<span class="px-3 text-sm font-bold tracking-wide text-cream-100">
 		{shutter.name}
 	</span>
 
 	<!-- Slider -->
-	<div class="relative h-10 w-full">
+	<div class="relative min-h-8 w-full flex-1 max-h-12">
 		<div
 			bind:this={sliderEl}
 			role="slider"
